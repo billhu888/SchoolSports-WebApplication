@@ -1,0 +1,15 @@
+﻿@model SchoolSports.Models.StudentsModel
+
+@{
+    ViewData["Title"] = "Edited Student Porfile";
+}
+
+<p> 
+    Updated profile information for @Model.First_Name @Model.Middle_Name @Model.Last_Name 
+</p>
+
+<a href="@Url.Action("SearchStudentsResults", "Students", 
+    new { FirstName = @Model.First_Name, LastName = @Model.Last_Name})"
+> 
+    Click on the link below to go back to the "Students Search Results" page
+</a>

@@ -1,0 +1,38 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+#Students_Index_Table tr th {
+    background-color: skyblue;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#Students_Index_Table tr {
+    border: 1px solid black;
+}
+
+#Students_Index_Table tr td {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+#Students_Index_Table tr td input {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}

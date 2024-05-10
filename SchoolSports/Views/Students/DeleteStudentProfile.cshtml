@@ -1,0 +1,25 @@
+﻿@model SchoolSports.Models.StudentsModel
+
+@{
+    ViewData["Title"] = "Deleted Student Profile";
+}
+
+@if (Model == null)
+{
+    <p> No results found</p>
+}
+else
+{
+    <p> 
+        Successfully deleted the profile for
+        @Model.First_Name 
+        @Model.Middle_Name 
+        @Model.Last_Name
+    </p>
+
+    <a href="@Url.Action("SearchStudentsResults", "Students", 
+        new { FirstName = @Model.First_Name, LastName = @Model.Last_Name})"
+    > 
+        Click on the link below to go back to the "Search for Students" page
+    </a>
+}

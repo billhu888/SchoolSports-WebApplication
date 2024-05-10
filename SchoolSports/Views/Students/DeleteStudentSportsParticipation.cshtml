@@ -1,0 +1,118 @@
+﻿@model SchoolSports.Models.DeleteStudentSportPParticipationModel
+
+@{
+    ViewData["Title"] = "Delete Student Sports Participation Records";
+    bool isPost = Convert.ToBoolean(ViewData["isPost"]);
+    bool indicator = Convert.ToBoolean(ViewData["indicator"]);
+}
+
+@if (Model == null)
+{
+    <p> No results found</p>
+}
+else 
+{
+    @if (isPost == false)
+    {
+        <div>
+            @using (Html.BeginForm("DeleteStudentSportsParticipation", "Students", FormMethod.Post, new { id = "sportForm" }))
+            {
+                <table>
+                    <tr>
+                        <td>Student ID</td>
+                        <td><input type="text" name="StudentID" value=@Model.StudentID readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Student Sex</td>
+                        <td><input type="text" name="Sex" value=@Model.Sex readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Choose Sports to Delete</td>
+                        <td>@Html.ListBoxFor(m => m.DeletedSportsIds, Model.DeletedSports)</td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <input id="SubmitLink" type="submit" value="Submit">
+                        </td>
+                        <td align="left">
+                            <a href="@Url.Action("ShowAllStudentInfo", "Students", 
+                                new { id = @Model.StudentID })"
+                                id="cancelLink"
+                            >
+                                Cancel
+                            </a>                      
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+        <script>
+            function confirmCancel() 
+            {
+                var confirmation = confirm("Are you sure you want to cancel deleting student's sport participation records and return to the student's profile information?");
+        
+                if (confirmation)
+                {
+                    window.location.href = document.getElementById("cancelLink").href;
+                }
+            }
+
+            document.getElementById("cancelLink").addEventListener("click", function(event) 
+            {
+                event.preventDefault();
+
+                confirmCancel();
+            });
+
+            function confirmSubmit() 
+            {
+                var selectedSports = document.getElementById("DeletedSportsIds").selectedOptions;
+                if (selectedSports.length == 0) 
+                {
+                    alert("Please select at least one sport.");
+                } 
+                else 
+                {
+                    var confirmation = confirm("Are you sure you want to delete student's sport participation records?");
+
+                    if (confirmation) 
+                    {
+                        document.getElementById("sportForm").submit();
+                    }
+                }
+            }
+
+            document.getElementById("SubmitLink").addEventListener("click", function(event) 
+            {
+                event.preventDefault();
+
+                confirmSubmit();
+            });
+        </script>
+    }
+    else
+    {
+        @if(indicator)
+        {
+            <p> Deleted the IDs following sports below for Student ID: @Model.StudentID</p>
+
+            @foreach (int SportID in Model.DeletedSportsIds)
+            {
+                @SportID
+                <br />
+            }
+
+            <br />
+            <a href="@Url.Action("ShowAllStudentInfo", "Students", 
+                new { id = @Model.StudentID })"
+            > 
+                Click on the link to go back to the Students
+            </a>
+        }
+        else
+        {
+            <p> Not successful. Try deleting sports again. </p>
+        }
+    }
+}

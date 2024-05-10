@@ -1,0 +1,187 @@
+﻿@model SchoolSports.Models.AddStudentSportParticipationModel
+
+@{
+    ViewData["Title"] = "Add Student Sports Participation Records";
+    bool isPost = Convert.ToBoolean(ViewData["isPost"]);
+    bool indicator = Convert.ToBoolean(ViewData["indicator"]);
+}
+
+<h1> Add Student Sports Participation Records </h1>
+
+@if (Model == null)
+{
+    <p> No results found</p>
+}
+else
+{
+    @if (isPost == false)
+    {
+        <div>
+            @using (Html.BeginForm("AddStudentSportParticipation", "Students", FormMethod.Post, new { id = "sportForm" }))
+            {
+                <table>
+                    <tr>
+                        <td>Student ID</td>
+                        <td><input type="text" name="StudentID" value=@Model.StudentID readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Student Sex</td>
+                        <td><input type="text" name="Sex" value=@Model.Sex readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Choose Sports to Add</td>
+                        <td>@Html.ListBoxFor(m => m.AddedSportsIds, Model.AddedSports)</td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <input id="SubmitLink" type="submit" value="Submit">
+                        </td>
+                        <td align="left">
+                            <a href="@Url.Action("ShowAllStudentInfo", "Students", 
+                                new { id = @Model.StudentID })" 
+                                id="cancelLink"
+                            >
+                                Cancel
+                            </a>                      
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+        <script>
+            function confirmCancel() 
+            {
+                var confirmation = confirm("Are you sure you want to cancel adding student's sport participation records and return to the student's profile information?");
+        
+                if (confirmation)
+                {
+                    window.location.href = document.getElementById("cancelLink").href;
+                }
+            }
+
+            document.getElementById("cancelLink").addEventListener("click", function(event) 
+            {
+                event.preventDefault();
+
+                confirmCancel();
+            });
+
+            function confirmSubmit() 
+            {
+                var selectedSports = document.getElementById("AddedSportsIds").selectedOptions;
+                if (selectedSports.length == 0) 
+                {
+                    alert("Please select at least one sport.");
+                } 
+                else 
+                {
+                    var confirmation = confirm("Are you sure you want to add student's sport participation records?");
+
+                    if (confirmation) 
+                    {
+                        document.getElementById("sportForm").submit();
+                    }
+                }
+            }
+
+            document.getElementById("SubmitLink").addEventListener("click", function(event) 
+            {
+                event.preventDefault();
+
+                confirmSubmit();
+            });
+        </script>
+    }
+    else
+    {
+        @if(indicator)
+        {
+            <p> Added the IDs following sports below for Student ID: @Model.StudentID</p>
+
+            @foreach (int SportID in Model.AddedSportsIds)
+            {
+                @SportID
+                <br />
+            }
+
+            <br />
+            <a href="@Url.Action("ShowAllStudentInfo", "Students", 
+                new { id = @Model.StudentID })"
+            > 
+                Click on the link below to go back to seeing the Student's information
+            </a>
+        }
+        else
+        {
+            <p> Not successful. Try adding sports again. </p>
+        }
+    } 
+}
+
+@*@if (Model == null) 
+{
+    <p> No results found</p>
+}
+else 
+{
+    @if (isPost == false) 
+    {
+        <div>
+            @using (Html.BeginForm("AddStudentSportParticipation", "Students", FormMethod.Post))
+            {
+                <table>
+                    <tr> 
+                        <td> Student ID: </td>
+                        <td> <input type="text" name="StudentID" value=@Model.StudentID readonly>  </td>
+                    </tr>
+                    <tr> 
+                        <td> Student ID: </td>
+                        <td> <input type="text" name="Sex" value=@Model.Sex readonly>  </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label name="sportschoices"> 
+                                @Html.DisplayName("Select Sport(s)")
+                            </label>
+                        </td>
+                        <td>
+                            <select name="Sport_Id" id="sportschoices" multiple style="width: 200px;">
+                                @{
+                                    foreach (var sport in Model.ListSports)
+                                    {
+                                        <option value=@sport.Sport_Id>@sport.Sport_Name</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+
+                    <!-- Hidden fields for selected sports -->
+                    @foreach (var sport in Model.ListSports)
+                    {
+                        <input type="hidden" name="Sport_Id" value="@sport.Sport_Id" />
+                    }
+
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" value="Submit">
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    }
+    else
+    {
+        @if(success==true)
+        {
+            <p> Successfully added sports participation records</p>
+        }
+        else
+        {
+            <p> Not successful. Try adding new sports participation records again. </p>
+        }
+    }
+}
+*@

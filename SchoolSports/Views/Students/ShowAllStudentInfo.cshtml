@@ -1,0 +1,123 @@
+﻿@model SchoolSports.Models.ShowAllStudentInfoModel
+
+@{
+    ViewData["Title"] = "All Student Information";
+}
+
+@if (Model == null)
+{
+    <p> No results found</p>
+}
+else
+{
+    <p> 
+        Below is the information of 
+        @Model.StudentsModel.First_Name @Model.StudentsModel.Middle_Name @Model.StudentsModel.Last_Name
+   </p>
+    <table>
+        <thead>
+            @*<th>@Html.DisplayNameFor(model => model.StudentsModel.Student_ID)</th>
+            <th>@Html.DisplayNameFor(model => model.StudentsModel.First_Name)</th>
+            <th>@Html.DisplayNameFor(model => model.StudentsModel.Middle_Name)</th>
+            <th>@Html.DisplayNameFor(model => model.StudentsModel.Last_Name)</th>
+            <th>@Html.DisplayNameFor(model => model.StudentsModel.Sex)</th>
+            <th>@Html.DisplayNameFor(model => model.StudentsModel.Grade)</th>
+            <th>@Html.DisplayNameFor(model => model.StudentsModel.Date_of_Birth)</th>
+            <th>@Html.DisplayNameFor(model => model.StudentsModel.Age)</th>*@
+            <th>Student ID</th>
+            <th>Student First Name</th>
+            <th>Student Middle Name</th>
+            <th>Student Last Name</th>
+            <th>Student Sex</th>
+            <th>Student Grade</th>
+            <th>Student Date of Birth</th>
+            <th>Student Age</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.StudentsModel.Student_ID</td>
+                <td>@Model.StudentsModel.First_Name</td>
+                <td>@Model.StudentsModel.Middle_Name</td>
+                <td>@Model.StudentsModel.Last_Name</td>
+                <td>@Model.StudentsModel.Sex</td>
+                <td>@Model.StudentsModel.Grade</td>
+                <td>@Model.StudentsModel.Date_of_Birth.ToString("MM-dd-yyyy")</td>
+                <td>@Model.StudentsModel.Age</td>
+            </tr>
+        </tbody>
+    </table>
+    <br /> 
+    <br />
+    <p> 
+        Below are the sports that
+            @Model.StudentsModel.First_Name @Model.StudentsModel.Middle_Name @Model.StudentsModel.Last_Name
+            plays
+    </p>
+    <table>
+        <thead>
+            @*@foreach (var property in typeof(SportsModel).GetProperties())
+            {
+                <th>@property.Name</th>
+            }*@
+            <th>Sport ID</th>
+            <th>Sport Gender</th>
+            <th>Sport Name</th>
+            <th>Sport Season</th>
+        </thead>
+        <tbody>
+            @foreach (var Sport in Model.ListSports)
+            {
+                <tr>
+                    <td>@Sport.Sport_Id</td>
+                    <td>@Sport.Sport_Gender</td>
+                    <td>@Sport.Sport_Name</td>
+                    <td>@Sport.Sport_Season</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <a href="@Url.Action("AddStudentSportParticipation", "Students", 
+        new { id = @Model.StudentsModel.Student_ID,
+            sex = @Model.StudentsModel.Sex})"
+    > 
+        Add Student Sports Participation 
+    </a> 
+    <br />
+    <br />
+    <a href="@Url.Action("DeleteStudentSportsParticipation", "Students",
+        new { id = @Model.StudentsModel.Student_ID,
+            sex = @Model.StudentsModel.Sex})"
+    >
+        Delete Student Sports Participation
+    </a>
+    <br /> 
+    <br />
+    <p>
+        Below are the library books that 
+            @Model.StudentsModel.First_Name @Model.StudentsModel.Middle_Name @Model.StudentsModel.Last_Name
+            has checked out
+    </p>
+    <table>
+        <thead>
+            @* @foreach (var property in typeof(LibraryModel).GetProperties())
+            {
+                @if (property.Name != "Student_ID_Checked_Out")
+                {
+                    <th>@property.Name</th>
+                }
+            }*@
+            <th>Book ID</th>
+            <th>Book Title</th>
+            <th>Book Author</th>
+        </thead>
+        <tbody>
+            @foreach (var Library in Model.ListLibrary)
+            {
+                <td>@Library.Book_Id</td>
+                <td>@Library.Book_Title</td>
+                <td>@Library.Book_Author</td>
+            }
+        </tbody>
+    </table>
+}

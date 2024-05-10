@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SchoolSports.Models.StudentsModel>
+
+@{
+    ViewData["Title"] = "Search Students Results";
+}
+
+<h1>Search Students Results</h1>
+
+@if (Model == null)
+{
+    <p> No results found</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>                    
+                        <a href="@Url.Action("ShowAllStudentInfo", "Students", new { id = item.Student_ID })">
+                            @item.First_Name
+                            @Html.DisplayFor(modelItem => item.Middle_Name) 
+                            @Html.DisplayFor(modelItem => item.Last_Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("ShowAllStudentInfo", "Students", new { id = item.Student_ID })">
+                            Student Profile
+                        </a> |
+                        <a href="@Url.Action("EditStudentProfile", "Students", new { id = item.Student_ID })">
+                            Edit Profile
+                        </a> |
+                       <a href="#" onclick="confirmDelete('@Url.Action("DeleteStudentProfile", "Students", 
+                            new { id = item.Student_ID })')"
+                       >
+                            Delete Profile
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script>
+        function confirmDelete(url) 
+        {
+            var confirmation = confirm("Are you sure you want to delete this profile?");
+
+            if (confirmation) 
+            {
+                window.location.href = url;
+            }
+        }
+    </script>
+}

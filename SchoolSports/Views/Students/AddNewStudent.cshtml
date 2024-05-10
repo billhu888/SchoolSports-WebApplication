@@ -1,0 +1,133 @@
+﻿@model SchoolSports.Models.StudentsModel
+
+@{
+    ViewData["Title"] = "Add New Student";
+    bool isPost = Convert.ToBoolean(ViewData["isPost"]);
+    bool success = Convert.ToBoolean(ViewBag.Success);
+}
+
+<h1> Add New Student </h1>
+
+@if (isPost == false) 
+{
+    <div>
+        @using (Html.BeginForm("AddNewStudent", "Students", FormMethod.Post, new { id = "NewStudentForm" }))
+        {
+            <table>
+                <tr>
+                    @*<td>@Html.DisplayNameFor(model => model.Student_ID)</td>*@
+                    <td>@Html.DisplayName("Student ID")</td>
+                    <td><input type="text" name="Student_ID" value=@Model.Student_ID readonly></td>
+                </tr>
+                <tr>
+                    @*<td>@Html.DisplayNameFor(model => model.First_Name)</td>*@
+                    <td>@Html.DisplayName("First Name")</td>
+                    <td><input type="text" name="First_Name"/></td>
+                </tr>
+                <tr>
+                    @*<td>@Html.DisplayNameFor(model => model.Middle_Name)</td>*@
+                    <td>@Html.DisplayName("Middle Name")</td>
+                    <td><input type="text" name="Middle_Name"/></td>
+                </tr>
+                <tr>
+                    @*<td>@Html.DisplayNameFor(model => model.Last_Name)</td>*@
+                    <td>@Html.DisplayName("Last Name")</td>
+                    <td><input type="text" name="Last_Name"/></td>
+                </tr>
+                <tr>
+                    @*<td>@Html.DisplayNameFor(model => model.Sex)</td>*@
+                    <td>@Html.DisplayName("Sex")</td>
+                    <td><input type="text" name="Sex"/></td>
+                </tr>
+                <tr>
+                    @*<td>@Html.DisplayNameFor(model => model.Grade)</td>*@
+                    <td>@Html.DisplayName("Grade")</td>
+                    <td><input type="text" name="Grade"/></td>
+                </tr>
+                <tr>
+                    @*<td>@Html.DisplayNameFor(model => model.Date_of_Birth)</td>*@
+                    <td>@Html.DisplayName("Date of Birth")</td>
+                    <td>@Html.EditorFor(model => model.Date_of_Birth)</td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <input id="SubmitLink" type="submit" value="Submit">
+                    </td>
+                    <td align="left">
+                        <a href="@Url.Action("Index", "Students")"
+                            id="cancelLink"
+                        >
+                            Cancel
+                        </a>                      
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+
+    <script>
+            function confirmCancel() 
+            {
+                var confirmation = confirm("Are you sure you don't want to add the new student to the database?");
+        
+                if (confirmation)
+                {
+                    window.location.href = document.getElementById("cancelLink").href;
+                }
+            }
+
+            document.getElementById("cancelLink").addEventListener("click", function(event) 
+            {
+                event.preventDefault();
+
+                confirmCancel();
+            });
+
+            function confirmSubmit() 
+            {
+                var inputs = document.querySelectorAll('#NewStudentForm input[type="text"]');
+
+                var isEmpty = Array.from(inputs).some(function(input) 
+                {
+                    return input.value.trim() === '';
+                });
+        
+                if (isEmpty) 
+                {
+                    alert("Please fill in all fields.");
+                } 
+                else 
+                {
+                    var confirmation = confirm("Are you sure you want to add the new student the database?");
+
+                    if (confirmation) 
+                    {
+                        document.getElementById("NewStudentForm").submit();
+                    }
+                }
+            }
+
+            document.getElementById("SubmitLink").addEventListener("click", function(event) 
+            {
+                event.preventDefault();
+
+                confirmSubmit();
+            });
+        </script>
+}
+else 
+{
+    @if(success == true)
+    {
+        <p> You have just successfully added the new student @Model.First_Name @Model.Middle_Name @Model.Last_Name</p>
+        <a href="@Url.Action("SearchStudentsResults", "Students", 
+            new { FirstName = @Model.First_Name, LastName = @Model.Last_Name })"
+        >
+        Click on the link to go to the "Students Search Results" page to see the newly added student 
+        </a>
+    }
+    else
+    {
+        <p> Not successful. Try adding a new student again. </p>
+    }
+}

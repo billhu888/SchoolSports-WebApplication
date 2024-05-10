@@ -1,0 +1,36 @@
+﻿@model SchoolSports.Models.FruitModel
+
+@{
+    ViewData["Title"] = "Fruit Details";
+    bool isPost = Convert.ToBoolean(ViewData["isPost"]);
+    bool success = Convert.ToBoolean(ViewBag.Success);
+}
+
+@if (Model == null)
+{
+    <p> No results found</p>
+}
+else
+{
+    <div>
+        @using (Html.BeginForm("Index", "Fruit", FormMethod.Post)) 
+        {
+            @Html.Label("Fruits:")
+            <br/>
+            <br/>
+            @Html.ListBoxFor(m => m.FruitIds, Model.Fruits)
+            <br/>
+            <br/>
+            <input type="submit" value="Submit"/>
+        }
+
+        @if (ViewBag.Message != null)
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    alert("@ViewBag.Message");
+                };
+            </script>
+        }
+    </div>
+}
