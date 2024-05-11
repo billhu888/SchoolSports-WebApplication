@@ -10,3 +10,6 @@
 
 ![Screenshot 2024-05-11 100405](https://github.com/billhu888/SchoolSports-WebApplication/assets/141262476/b5b814cf-37dc-40bc-bb25-55a180a92370)
 
+![Screenshot 2024-05-11 100527](https://github.com/billhu888/SchoolSports-WebApplication/assets/141262476/3419bdc6-f4f7-43fe-a684-0fa895397e8b)
+
+![Screenshot 2024-05-11 100536](https://github.com/billhu888/SchoolSports-WebApplication/assets/141262476/f0c87046-4c0f-4f47-b2a5-ab09f937d043)
