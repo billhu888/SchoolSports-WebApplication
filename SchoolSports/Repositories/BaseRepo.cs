@@ -5,7 +5,7 @@ using System.Data;
 namespace SchoolSports.Repositories
 {
     abstract class BaseRepo
-    {
+    {  
         protected bool isConnected = false;
         protected SqlConnection connection;
    
