@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace SchoolSports.Controllers
 {
+    ///
     public class StudentsController : Controller
     {
         private readonly ILogger<StudentsController> _logger;
@@ -15,10 +16,34 @@ namespace SchoolSports.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        ///     GET: /Students
+        ///     Allows you to look up students by entering at least a last name
+        ///        but can also enter a first name to be more specific
+        ///     Can add a new student as well
+        /// </summary>
+        /// 
+        /// <returns>
+        ///     A page where you can search up students by entering at least a
+        ///        last name but can also enter a first name to be more specific
+        ///     Can also click on a link to add a new student
+        /// </returns>
+
         public IActionResult Index()
         {
             return View();
         }
+
+        /// <summary>
+        ///     GET: /Students/AddNewStudent
+        ///     You can add a new student to the database by entering the 
+        ///        student's information
+        /// </summary>
+        /// 
+        /// <returns>
+        ///     A form where you can enter a new student by entering and 
+        ///        submitting the new student's information
+        /// </returns>
 
         public IActionResult AddNewStudent()
         {
@@ -26,6 +51,7 @@ namespace SchoolSports.Controllers
             AddNewStudentRepo NewStudentRepo = new AddNewStudentRepo();
             ViewData["isPost"] = false;
 
+            // Get the ID for the new student
             bool success = NewStudentRepo.GetNewStudentID(NewStudent);
 
             if (success)
@@ -38,12 +64,27 @@ namespace SchoolSports.Controllers
             }
         }
 
+        /// <summary>
+        ///     POST: /Students/AddNewStudent
+        ///     Adds a new student's information to the database
+        /// </summary>
+        /// 
+        /// <param name="NewStudent">
+        ///     A model that holds the new student's information
+        /// </param>
+        /// 
+        /// <returns>
+        ///     A page confirming that adding the new student to the 
+        ///        database has been successful
+        /// </returns>
+
         [HttpPost]
         public IActionResult AddNewStudent(StudentsModel NewStudent)
         {
             AddNewStudentRepo NewStudentRepo = new AddNewStudentRepo();
             ViewData["isPost"] = true;
 
+            // Adds the new student to the database
             bool success = NewStudentRepo.AddNewStudent(NewStudent);
 
             ViewBag.Success = success;
@@ -57,6 +98,22 @@ namespace SchoolSports.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        ///     
+        /// </summary>
+        /// 
+        /// <param name="FirstName">
+        /// 
+        /// </param>
+        /// 
+        /// <param name="LastName">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
 
         [HttpGet]
         public IActionResult SearchStudentsResults(string FirstName, string LastName) 
@@ -77,6 +134,18 @@ namespace SchoolSports.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>  
+        /// 
+        /// <param name="id">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
 
         public IActionResult ShowAllStudentInfo(int id)
         {
@@ -113,29 +182,21 @@ namespace SchoolSports.Controllers
             }
         }
 
-        //public IActionResult AddStudentSportParticipation(int id, string sex)
-        //{
-        //    AddStudentSportParticipationModel sportsParModel = new AddStudentSportParticipationModel();
-        //    AddStudentSportParticipationRepo AddSportPar = new AddStudentSportParticipationRepo();
-
-        //    bool success = AddSportPar.ReadStudentSports(sportsParModel, id, sex);
-        //    ViewData["isPost"] = false;
-
-        //    return View(sportsParModel);
-        //}
-
-        //[HttpPost]
-        //public IActionResult AddStudentSportParticipation(AddStudentSportParticipationModel AddSportsPar)
-        //{
-        //    AddStudentSportParticipationRepo AddSportPar = new AddStudentSportParticipationRepo();
-
-        //    bool success = AddSportPar.AddSportsParticipationToDatabase(AddSportsPar);
-
-        //    ViewData["isPost"] = true;
-        //    ViewBag.Success = success;
-
-        //    return View(AddSportsPar);
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="id">
+        /// 
+        /// </param>
+        /// 
+        /// <param name="sex">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
 
         public IActionResult AddStudentSportParticipation(int id, string sex)
         {
@@ -158,6 +219,18 @@ namespace SchoolSports.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="SelectedSports">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
 
         [HttpPost]
         public ActionResult AddStudentSportParticipation(AddStudentSportParticipationModel SelectedSports)
@@ -194,6 +267,22 @@ namespace SchoolSports.Controllers
             }
         } 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="id">
+        /// 
+        /// </param>
+        /// 
+        /// <param name="sex">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
+
         public IActionResult DeleteStudentSportsParticipation(int id, string sex)
         {
             DeleteStudentSportPParticipationModel DeleteSportsModel = new DeleteStudentSportPParticipationModel();
@@ -215,6 +304,18 @@ namespace SchoolSports.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="RemovedSports">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
 
         [HttpPost]
         public ActionResult DeleteStudentSportsParticipation(DeleteStudentSportPParticipationModel RemovedSports)
@@ -251,6 +352,18 @@ namespace SchoolSports.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="id">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
+
         public IActionResult EditStudentProfile(int id)
         {
             StudentsModel StudentProfile = new StudentsModel();
@@ -267,6 +380,18 @@ namespace SchoolSports.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="StudentProfile">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
 
         [HttpPost]
         public IActionResult EditStudentProfile(StudentsModel StudentProfile)
@@ -287,22 +412,17 @@ namespace SchoolSports.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult EditedStudentProfile(StudentsModel studentProfile)
-        //{
-        //    EditedStudentProfileRepo EditedStudentProfile = new EditedStudentProfileRepo();
-
-        //    bool success = EditedStudentProfile.UpdateStudent(studentProfile);
-
-        //    if (success)
-        //    {
-        //        return View(studentProfile);
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="id">
+        /// 
+        /// </param>
+        /// 
+        /// <returns>
+        /// 
+        /// </returns>
 
         public IActionResult DeleteStudentProfile(int id)
         {
