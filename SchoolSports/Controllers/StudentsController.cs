@@ -133,7 +133,7 @@ namespace SchoolSports.Controllers
             {
                 return View();
             }
-        } 
+        }
 
         /// <summary>
         /// 
