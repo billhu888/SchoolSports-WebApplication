@@ -8,7 +8,7 @@ namespace SchoolSports.Repositories
     {
         protected bool isConnected = false;
         protected SqlConnection connection;
-
+ 
         public BaseRepo()
         {
             var objBuilder = new ConfigurationBuilder()
